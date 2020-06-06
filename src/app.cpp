@@ -10,18 +10,13 @@ int main (void){
 	Json weatherForecast = wp.extract();
 	std::cout<<weatherForecast.dump();
 	std::cout<<"\n\n\n";
-	std::cout<<weatherForecast["hour"].int_value()<<"\n";
 
-	std::cout<<weatherForecast["humid"].int_value()<<"\n";
-	std::cout<<weatherForecast["press"].int_value()<<"\n";
+	Json::array forecastsEntities = weatherForecast.array_items();
 
-	//	int hour = WeatherConditionJson["hour"].int_value();
-	//	Json::array cond = WeatherConditionJson["conditions"].array_items();
-	//	Json temp = cond[0];
-	//	Json::array  tempArr = temp["temp"].array_items();
-	//	int tempVal  = tempArr[0].int_value();
-	//	std::string  tempSymbol  = tempArr[1].string_value();
-	//
+	for (auto & entity : forecastsEntities){
+
+		std::cout<<(entity.object_items()).at("hour").number_value()<<": "<<(entity.object_items()).at("temp").number_value()<<"'C\n";
+	}
 
 }
 

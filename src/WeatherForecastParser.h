@@ -157,7 +157,7 @@ private:
 					}
 				}
 		}
-		if (forecastEntity.size() > 0){
+		if (forecastEntity.size() > 1){
 			forecasts.push_back(forecastEntity);
 		}
 		dumpNode(doc, child, indent + 4);
