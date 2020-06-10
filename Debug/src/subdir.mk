@@ -4,12 +4,15 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../src/ForecastOutputGui.cpp \
 ../src/app.cpp 
 
 OBJS += \
+./src/ForecastOutputGui.o \
 ./src/app.o 
 
 CPP_DEPS += \
+./src/ForecastOutputGui.d \
 ./src/app.d 
 
 

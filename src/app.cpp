@@ -1,24 +1,26 @@
 #include "WeatherForecastParser.h"
 
 
-
-int main (void){
-	HtmlDownloaderCurl curlDownloader;
-	WeatherParser wp(&curlDownloader, DWNLD_URL);
-
-
-	Json weatherForecast = wp.extract();
-	std::cout<<weatherForecast.dump();
-	std::cout<<"\n\n\n";
-
-	Json::array forecastsEntities = weatherForecast.array_items();
-
-	for (auto & entity : forecastsEntities){
-
-		std::cout<<(entity.object_items()).at("hour").number_value()<<": "<<(entity.object_items()).at("temp").number_value()<<"'C\n";
-	}
-
-}
+//
+//int main (void){
+//	HtmlDownloaderCurl curlDownloader;
+//	WeatherParser wp(&curlDownloader, DWNLD_URL);
+//
+//
+//	Json weatherForecast = wp.extract();
+//	std::cout<<weatherForecast.dump();
+//	std::cout<<"\n\n\n";
+//
+//	Json::array forecastsEntities = weatherForecast.array_items();
+//
+//	for (auto & entity : forecastsEntities){
+//
+//		std::cout<<(entity.object_items()).at("hour").number_value()<<": "<<(entity.object_items()).at("temp").number_value()<<"'C\n";
+//	}
+//
+//
+//
+//}
 
 
 

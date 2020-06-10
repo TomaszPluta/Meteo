@@ -71,11 +71,15 @@
                                     									
                                     <listOptionValue builtIn="false" value="curl"/>
                                     									
+                                    <listOptionValue builtIn="false" value="fltk"/>
+                                    									
                                     <listOptionValue builtIn="false" value="pthread"/>
                                     									
                                     <listOptionValue builtIn="false" value="tidy"/>
                                     								
                                 </option>
+                                								
+                                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="true" id="gnu.cpp.link.option.other.750210789" name="Other options (-Xlinker [option])" superClass="gnu.cpp.link.option.other" useByScannerDiscovery="false" valueType="stringList"/>
                                 								
                                 <inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.669280277" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
                                     									
