@@ -4,19 +4,13 @@
 #include "json11/json11.hpp"
 #include "HtmlDownloader.h"
 #include "HtmlDownloaderCurl.h"
-#include <htmlcxx/html/ParserDom.h>
-
-using namespace json11;
-using namespace htmlcxx;
-using namespace kp;
-
-
-
 
 #include <stdio.h>
 #include <tidy/tidy.h>
 #include <tidy/tidybuffio.h>
 #include <curl/curl.h>
+
+using namespace json11;
 
 
 constexpr const char * DWNLD_FILENAME = "meteo.html";

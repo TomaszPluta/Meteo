@@ -1,7 +1,7 @@
 #include "WeatherForecastParser.h"
 
 
-//
+
 //int main (void){
 //	HtmlDownloaderCurl curlDownloader;
 //	WeatherParser wp(&curlDownloader, DWNLD_URL);
