@@ -12,6 +12,7 @@
 #include <vector>
 #include <utility>
 #include <memory>
+#include <algorithm>
 #include "json11/json11.hpp"
 #include "ForecastInterface.h"
 using namespace json11;
@@ -31,54 +32,58 @@ void SaveCallback(Fl_Widget* widg, void*) {
 }
 
 
-class Form : public Fl_Window {
-public:
-	Form() : Fl_Window(200, 100, 300, 300, "Label example") {
-		this->resizable(this);
-
-		this->label1.align(FL_ALIGN_LEFT | FL_ALIGN_TOP | FL_ALIGN_INSIDE | FL_ALIGN_CLIP | FL_ALIGN_WRAP);
-	}
-
-private:
-	Fl_Box label1 {10, 10, 75, 25, "label1"};
-};
-
 
 
 class ForecastOutputGui : public Fl_Window , public ForecastOutputInterface{
 public:
-	ForecastOutputGui() :  Fl_Window (winX, winY, "Weather forecasts"){
+	ForecastOutputGui() :  Fl_Window (winH, winV, "Weather forecasts"){
 		this->resizable(this);
 	}
 
 
 	void ProduceOutput(Json forecastJson) {
-		Json::object v = forecastJson.object_items();
-		for (auto & entity : v){
-			std::cout<<entity.first.c_str()<<std::endl;
-			Fl_Output *label = new Fl_Output(indent, vPos+=spaceV, labelH, labelV);
+		Json::object j = forecastJson.object_items();
+
+		for (auto & entity : j){
+			std::shared_ptr<Fl_Output> label = std::make_shared<Fl_Output>(indent, vPos+=spaceV, labelH, labelV);
 			label->copy_label(entity.first.c_str());
 			label->value(std::to_string(entity.second.int_value()).c_str());
+			label->labelsize(labelV);
+			label->textsize(labelV-2);
+			labels.push_back(label);
+
 		}
-		   this->resizable(this);
+
+		this->resizable(this);
 	    this->show();
 	};
 
+
+	void update(Json forecastJson){
+		Json::object j = forecastJson.object_items();
+		for (auto & entity : j){
+			auto result = std::find_if(labels.begin(), labels.end(), [&](std::shared_ptr<Fl_Output> lb){
+				return (std::string(lb->label()) == std::string(entity.first));
+			});
+			if (result != labels.end()){
+				(*result)->value(std::to_string(entity.second.int_value()).c_str());
+		}
+		}
+	}
+
+
 private:
 
-	static constexpr int winX = 140;
-	static constexpr int winY = 300;
-	int vPos = 0;
+	static constexpr int winH = 250;
+	static constexpr int winV = 350;
 	static constexpr int labelH = 50;
 	static constexpr int labelV = 20;
 	static constexpr int indent = 60;
 	static constexpr int spaceV = 40;
+	int vPos = 0;
 
 
-void update(std::map<std::string, int>m);
-std::vector<Fl_Output> labels;
-
-
+std::vector<std::shared_ptr<Fl_Output>> labels;
 
 };
 
@@ -89,13 +94,14 @@ std::vector<Fl_Output> labels;
 int main() {
 
 
-
-
 	Json::object j ={{"hour", 11},{"temp", 27}, {"humid", 60}, {"press", 1024}};
 	Json jj(j);
 	ForecastOutputGui fg;
 	fg.ProduceOutput(jj);
 
+	Json::object k ={{"hour", 10},{"temp", 11}, {"humid", 50}, {"press", 1024}};
+	Json kk(j);
+	fg.update(kk);
 	return Fl::run();
 
 }
